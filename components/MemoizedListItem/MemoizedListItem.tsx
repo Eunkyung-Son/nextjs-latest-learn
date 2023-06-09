@@ -1,8 +1,20 @@
 import NextImage from "next/image";
 import { memo, useMemo } from "react";
-import { ListItemProps } from "../MemoizedListItem/MemoizedListItem";
 
-const ListItem = ({ data }: ListItemProps) => {
+export interface Photo {
+  albumId: number;
+  id: number;
+  title: string;
+  url: string;
+  thumbnailUrl: string;
+}
+
+export interface ListItemProps {
+  data: Photo;
+}
+
+const MemoizedListItem = ({ data }: ListItemProps) => {
+  // const { albumId, id, title, url, thumbnailUrl } = data;
   const { id, albumId, title, url, thumbnailUrl } = useMemo(() => data, [data]);
   return (
     <div>
@@ -21,4 +33,4 @@ const ListItem = ({ data }: ListItemProps) => {
   );
 };
 
-export default ListItem;
+export default memo(MemoizedListItem);

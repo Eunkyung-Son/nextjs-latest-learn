@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
-import ListItem from "../../components/ListItem/ListItem";
+import MemoizedListItem, {
+  Photo,
+} from "../../components/MemoizedListItem/MemoizedListItem";
 
 export const metadata: Metadata = {
   title: "EUNKYUNG",
@@ -15,37 +17,22 @@ const getPhotos = async () => {
 
 // `app/page.tsx` is the UI for the `/` URL
 export default async function Page() {
-  const photos = await getPhotos();
+  const photos: Photo[] = await getPhotos();
 
   console.log(photos, "data");
 
   return (
     <div
       style={{
-        width: "200px",
-        height: "200px",
-        backgroundColor: "gray",
+        backgroundColor: "lightgray",
+        border: "1px solid black",
       }}
     >
-      <h1>Hello, Root page!!!</h1>
-      <Suspense
-        fallback={
-          <div
-            style={{
-              width: "100px",
-              height: "100px",
-            }}
-          >
-            ...loading
-          </div>
-        }
-      >
-        <ListItem {...photos} />
-        {/* <ul> */}
-        {/* {photos?.map((photo: any) => (
-            <li key={photo.id}>{photo.name}</li>
-          ))} */}
-        {/* </ul> */}
+      <h1>ssr page component</h1>
+      <Suspense fallback={<div>Loading...</div>}>
+        {photos.map((photo) => (
+          <MemoizedListItem key={photo.id} data={photo} />
+        ))}
       </Suspense>
     </div>
   );
