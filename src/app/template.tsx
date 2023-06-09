@@ -26,7 +26,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
       <p>Root Template</p>
       <p>page inside a template</p>
       <p>
-        root 에 template 이 있고 하위 route 에 template가 있으면 root
+        상위에 template 이 있고 상위 route 에 template이 없으면 상위
         template으로 override 됨
       </p>
       <h1>csr template component</h1>
@@ -39,32 +39,47 @@ export default function Template({ children }: { children: React.ReactNode }) {
         }}
       >
         <div>{children}</div>
-        <Suspense
-          fallback={
-            <div
-              style={{
-                width: "100px",
-                height: "100px",
-                backgroundColor: "red",
-              }}
-            >
-              ...loading!!!!!!!!!!!!
-            </div>
-          }
-        >
-          <div>
-            <p>no memoized</p>
+
+        <div>
+          <p>no memoized</p>
+          <Suspense
+            fallback={
+              <div
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  backgroundColor: "red",
+                }}
+              >
+                ...loading!!!!!!!!!!!!
+              </div>
+            }
+          >
             {photos.map((photo) => (
               <ListItem data={photo} key={photo.id} />
             ))}
-          </div>
-          <div>
-            <p>memoized</p>
+          </Suspense>
+        </div>
+        <div>
+          <p>memoized</p>
+          <Suspense
+            fallback={
+              <div
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  backgroundColor: "red",
+                }}
+              >
+                ...loading!!!!!!!!!!!!
+              </div>
+            }
+          >
             {photos.map((photo) => (
               <MemoizedListItem data={photo} key={photo.id} />
             ))}
-          </div>
-        </Suspense>
+          </Suspense>
+        </div>
       </div>
     </div>
   );
