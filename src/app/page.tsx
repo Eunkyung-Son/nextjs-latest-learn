@@ -52,7 +52,6 @@ export default async function Page() {
       }}
     >
       <h1>ssr page component</h1>
-      <h1>suspense boundary</h1>
 
       <MemoizedListItem key={photo.id} data={photo} />
       {photoList.map((photo) => (
