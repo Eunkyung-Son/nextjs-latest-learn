@@ -52,7 +52,14 @@ export default async function Page() {
     >
       <h1>Hello Dashboard Page!!</h1>
       <h1>ssr page component</h1>
-      <MemoizedListItem key={photo.id} data={photo} />
+      <div
+        style={{
+          border: "1px solid black",
+        }}
+      >
+        <h1>no suspense boundary</h1>
+        <MemoizedListItem key={photo.id} data={photo} />
+      </div>
       <h1>suspense boundary</h1>
       <Suspense fallback={"dddd"}>
         {/* @ts-expect-error Async Server Component */}
