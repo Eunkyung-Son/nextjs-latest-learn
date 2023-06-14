@@ -1,4 +1,7 @@
-import { use } from "react";
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+
 import { Photo } from "../MemoizedListItem/MemoizedListItem";
 import NextImage from "next/image";
 async function getPhotos() {
@@ -16,11 +19,14 @@ async function getPhotos() {
 // ts error 유발하지 않음
 
 function PhotosComponent() {
-  const photoList = use(getPhotos());
+  const { data: photoList } = useQuery({
+    queryKey: ["posts"],
+    queryFn: getPhotos,
+  });
 
   return (
     <div>
-      {photoList.map(({ id, albumId, title, url, thumbnailUrl }) => (
+      {photoList?.map(({ id, albumId, title, url, thumbnailUrl }) => (
         <div key={id}>
           <p
             style={{

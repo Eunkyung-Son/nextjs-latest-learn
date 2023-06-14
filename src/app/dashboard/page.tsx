@@ -4,6 +4,7 @@ import MemoizedListItem, {
   type Photo as PhotoType,
 } from "../../../components/MemoizedListItem/MemoizedListItem";
 import PhotosComponent from "../../../components/Photos/Photos";
+import HydratedPosts from "../hydratedPhotos";
 
 export const metadata: Metadata = {
   title: "EUNKYUNG",
@@ -34,11 +35,13 @@ export default async function Page() {
         }}
       >
         <h1>no suspense boundary</h1>
+
         <MemoizedListItem key={photo.id} data={photo} />
       </div>
       <h1>suspense boundary</h1>
       <Suspense fallback={"loading....!!!!"}>
-        <PhotosComponent />
+        {/* <PhotosComponent /> */}
+        <HydratedPosts />
       </Suspense>
     </div>
   );

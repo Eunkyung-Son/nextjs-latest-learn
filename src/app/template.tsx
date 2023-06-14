@@ -73,13 +73,15 @@ export default function Template({ children }: { children: React.ReactNode }) {
       >
         <div>{children}</div>
         <button
-          onClick={() => setMessage(["memo & no memo performance measurement"])}
+          onClick={() =>
+            setMessage(["memo & non memo performance measurement"])
+          }
         >
           rerendering trigger
         </button>
 
         <div>
-          <p>no memoized</p>
+          <p>non memoized</p>
           <Suspense
             fallback={
               <div
@@ -93,7 +95,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
               </div>
             }
           >
-            <Profiler id="noMemoizedListItem" onRender={onRenderCallback}>
+            <Profiler id="nonMemoizedListItem" onRender={onRenderCallback}>
               {photos.map((photo) => (
                 <ListItem data={photo} key={photo.id} />
               ))}

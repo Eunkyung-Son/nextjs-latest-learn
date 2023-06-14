@@ -30,7 +30,7 @@ async function getPhotoById(id: number) {
   return data as Photo;
 }
 
-async function getPhotos() {
+export async function getPhotos() {
   const res = await fetch(`https://jsonplaceholder.typicode.com/photos`);
   const data = await res.json();
   return data as Photo[];
