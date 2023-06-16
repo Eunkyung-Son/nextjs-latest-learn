@@ -3,9 +3,8 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { Photo } from "../MemoizedListItem/MemoizedListItem";
-import NextImage from "next/image";
 async function getPhotos() {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/photos`);
+  const res = await fetch(`https://jsonplaceholder.typicode.com/comments`);
   const data = await res.json();
   return data as Photo[];
 }
@@ -25,20 +24,24 @@ function PhotosComponent() {
   });
 
   return (
-    <div>
-      {photoList?.map(({ id, albumId, title, url, thumbnailUrl }) => (
+    <div
+      style={{
+        border: "1px solid green",
+      }}
+    >
+      {photoList?.map(({ id, postId, name, email, body }) => (
         <div key={id}>
           <p
             style={{
               fontSize: "12px",
             }}
           >
-            {id}
+            id: {id}
           </p>
-          <p>{albumId}</p>
-          <p>{title}</p>
-          <p>{url}</p>
-          <NextImage src={thumbnailUrl} alt={title} width={100} height={100} />
+          <p>postId: {postId}</p>
+          <p>name: {name}</p>
+          <p>email: {email}</p>
+          <p>body: {body}</p>
         </div>
       ))}
     </div>

@@ -12,7 +12,9 @@ export const metadata: Metadata = {
 };
 
 async function getPhotoById(id: number) {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/photos/${id}`);
+  const res = await fetch(
+    `https://jsonplaceholder.typicode.com/comments/${id}`
+  );
   const data = await res.json();
   return data as PhotoType;
 }

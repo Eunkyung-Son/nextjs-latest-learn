@@ -12,7 +12,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const [photos, setPhotos] = React.useState<Photo[]>([]);
 
   React.useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/photos")
+    fetch("https://jsonplaceholder.typicode.com/comments")
       .then((response) => response.json())
       .then(setPhotos);
   }, [setPhotos]);
@@ -56,6 +56,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         border: "1px solid black",
       }}
     >
+      <h1>message: {message}</h1>
       <p>Root Template</p>
       <p>page inside a template</p>
       <p>

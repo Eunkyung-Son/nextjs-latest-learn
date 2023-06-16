@@ -25,13 +25,15 @@ export const metadata: Metadata = {
  * 
  */
 async function getPhotoById(id: number) {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/photos/${id}`);
+  const res = await fetch(
+    `https://jsonplaceholder.typicode.com/comments/${id}`
+  );
   const data = await res.json();
   return data as Photo;
 }
 
 export async function getPhotos() {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/photos`);
+  const res = await fetch(`https://jsonplaceholder.typicode.com/comments`);
   const data = await res.json();
   return data as Photo[];
 }
@@ -43,6 +45,8 @@ export default async function Page() {
   const photos = getPhotos();
 
   const [photo, photoList] = await Promise.all([photoById, photos]);
+
+  console.log(photoList);
 
   return (
     <div

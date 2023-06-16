@@ -1,12 +1,11 @@
-import NextImage from "next/image";
 import { memo, useMemo } from "react";
 
 export interface Photo {
-  albumId: number;
+  postId: number;
   id: number;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
+  name: string;
+  email: string;
+  body: string;
 }
 
 export interface ListItemProps {
@@ -14,21 +13,24 @@ export interface ListItemProps {
 }
 
 const MemoizedListItem = ({ data }: ListItemProps) => {
-  // const { albumId, id, title, url, thumbnailUrl } = data;
-  const { id, albumId, title, url, thumbnailUrl } = useMemo(() => data, [data]);
+  const { id, postId, name, email, body } = useMemo(() => data, [data]);
   return (
-    <div>
+    <div
+      style={{
+        border: "1px solid green",
+      }}
+    >
       <p
         style={{
           fontSize: "12px",
         }}
       >
-        {id}
+        id: {id}
       </p>
-      <p>{albumId}</p>
-      <p>{title}</p>
-      <p>{url}</p>
-      <NextImage src={thumbnailUrl} alt={title} width={100} height={100} />
+      <p>postId: {postId}</p>
+      <p>name: {name}</p>
+      <p>email: {email}</p>
+      <p>body: {body}</p>
     </div>
   );
 };

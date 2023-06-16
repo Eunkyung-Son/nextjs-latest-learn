@@ -1,22 +1,26 @@
-import NextImage from "next/image";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 import { ListItemProps } from "../MemoizedListItem/MemoizedListItem";
 
 const ListItem = ({ data }: ListItemProps) => {
-  const { id, albumId, title, url, thumbnailUrl } = useMemo(() => data, [data]);
+  const { id, postId, name, email, body } = useMemo(() => data, [data]);
+
   return (
-    <div>
+    <div
+      style={{
+        border: "1px solid green",
+      }}
+    >
       <p
         style={{
           fontSize: "12px",
         }}
       >
-        {id}
+        id: {id}
       </p>
-      <p>{albumId}</p>
-      <p>{title}</p>
-      <p>{url}</p>
-      <NextImage src={thumbnailUrl} alt={title} width={100} height={100} />
+      <p>postId: {postId}</p>
+      <p>name: {name}</p>
+      <p>email: {email}</p>
+      <p>body: {body}</p>
     </div>
   );
 };
