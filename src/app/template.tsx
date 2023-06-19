@@ -5,6 +5,16 @@ import ListItem from "../../components/ListItem/ListItem";
 import MemoizedListItem, {
   Photo,
 } from "../../components/MemoizedListItem/MemoizedListItem";
+// import PhotosComponent2 from "../../components/Photos2/Photos2";
+// const PhotosComponent2 = React.lazy(
+//   () => import("../../components/Photos2/Photos2")
+// );
+
+const PhotosComponent2 = React.lazy(() => {
+  return new Promise((resolve) => setTimeout(resolve, 2000)).then(
+    () => import("../../components/Photos2/Photos2")
+  );
+});
 
 // client 코드는 template 에서만 작성 가능
 export default function Template({ children }: { children: React.ReactNode }) {
@@ -73,57 +83,86 @@ export default function Template({ children }: { children: React.ReactNode }) {
         }}
       >
         <div>{children}</div>
-        <button
-          onClick={() =>
-            setMessage(["memo & non memo performance measurement"])
-          }
-        >
-          rerendering trigger
-        </button>
+        <div>
+          <button
+            onClick={() =>
+              setMessage(["memo & non memo performance measurement"])
+            }
+          >
+            rerendering trigger
+          </button>
 
-        <div>
-          <p>non memoized</p>
-          <Suspense
-            fallback={
-              <div
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  backgroundColor: "red",
-                }}
-              >
-                ...loading!!!!!!!!!!!!
-              </div>
-            }
+          <h1>Intentionally triggering a cumulative layout shift</h1>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
           >
-            <Profiler id="nonMemoizedListItem" onRender={onRenderCallback}>
-              {photos.map((photo) => (
-                <ListItem data={photo} key={photo.id} />
-              ))}
-            </Profiler>
-          </Suspense>
-        </div>
-        <div>
-          <p>memoized</p>
-          <Suspense
-            fallback={
-              <div
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  backgroundColor: "red",
-                }}
+            <div>
+              <p>non memoized</p>
+              <Suspense
+                fallback={
+                  <div
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      backgroundColor: "red",
+                    }}
+                  >
+                    ...loading!!!!!!!!!!!!
+                  </div>
+                }
               >
-                ...loading!!!!!!!!!!!!
-              </div>
-            }
-          >
-            <Profiler id="memoizedListItem" onRender={onRenderCallback}>
-              {photos.map((photo) => (
-                <MemoizedListItem data={photo} key={photo.id} />
-              ))}
-            </Profiler>
-          </Suspense>
+                <Profiler id="nonMemoizedListItem" onRender={onRenderCallback}>
+                  {photos.map((photo) => (
+                    <ListItem data={photo} key={photo.id} />
+                  ))}
+                </Profiler>
+              </Suspense>
+            </div>
+            {/**
+             * suspense의 경우, 내부 컴포넌트가 비동기적으로 동작해야지만 보여진다
+             */}
+            <h1>improve cumulative layout shift</h1>
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    width: "550px",
+                    height: "100%",
+                  }}
+                >
+                  ...loading!!!!!!!!!!!!
+                </div>
+              }
+            >
+              <PhotosComponent2 />
+            </Suspense>
+
+            <div>
+              <p>memoized</p>
+              <Suspense
+                fallback={
+                  <div
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      backgroundColor: "red",
+                    }}
+                  >
+                    ...loading!!!!!!!!!!!!
+                  </div>
+                }
+              >
+                <Profiler id="memoizedListItem" onRender={onRenderCallback}>
+                  {photos.map((photo) => (
+                    <MemoizedListItem data={photo} key={photo.id} />
+                  ))}
+                </Profiler>
+              </Suspense>
+            </div>
+          </div>
         </div>
       </div>
     </div>

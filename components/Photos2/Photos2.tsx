@@ -1,11 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-
+"use client";
 import { Photo } from "../MemoizedListItem/MemoizedListItem";
-async function getPhotos() {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/comments`);
-  const data = await res.json();
-  return data as Photo[];
-}
+import React, { Suspense } from "react";
 
 // 컴포넌트 안에서 데이터 페칭 시
 
@@ -15,19 +10,24 @@ async function getPhotos() {
 // {/* @ts-expect-error Async Server Component */}
 // ts error 유발하지 않음
 
-function PhotosComponent() {
-  const { data: photoList } = useQuery({
-    queryKey: ["posts"],
-    queryFn: getPhotos,
-  });
+function PhotosComponent2() {
+  const [photos, setPhotos] = React.useState<Photo[]>([]);
+
+  React.useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/comments")
+      .then((response) => response.json())
+      .then(setPhotos);
+  }, [setPhotos]);
 
   return (
     <div
       style={{
         border: "1px solid green",
+        width: "550px",
+        height: "100%",
       }}
     >
-      {photoList?.map(({ id, postId, name, email, body }) => (
+      {photos?.map(({ id, postId, name, email, body }) => (
         <div key={id}>
           <p
             style={{
@@ -46,4 +46,4 @@ function PhotosComponent() {
   );
 }
 
-export default PhotosComponent;
+export default PhotosComponent2;
