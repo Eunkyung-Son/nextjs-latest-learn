@@ -3,8 +3,8 @@ import { Metadata } from "next";
 import MemoizedListItem, {
   type Photo as PhotoType,
 } from "../../../components/MemoizedListItem/MemoizedListItem";
-import PhotosComponent from "../../../components/Photos/Photos";
 import HydratedPosts from "../hydratedPhotos";
+import PhotosComponent3 from "../../../components/Photos3";
 
 export const metadata: Metadata = {
   title: "EUNKYUNG",
@@ -41,10 +41,19 @@ export default async function Page() {
         <MemoizedListItem key={photo.id} data={photo} />
       </div>
       <h1>suspense boundary</h1>
-      <Suspense fallback={"loading....!!!!"}>
-        {/* <PhotosComponent /> */}
-        <HydratedPosts />
-      </Suspense>
+      <div
+        style={{
+          display: "flex",
+        }}
+      >
+        <Suspense fallback={"loading....!!!!"}>
+          <PhotosComponent3 />
+          {/* <HydratedPosts /> */}
+        </Suspense>
+        <Suspense fallback={"loading....!!!!"}>
+          <HydratedPosts />
+        </Suspense>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { Suspense } from "react";
 import MemoizedListItem, {
   type Photo,
 } from "../../components/MemoizedListItem/MemoizedListItem";
@@ -45,8 +44,6 @@ export default async function Page() {
   const photos = getPhotos();
 
   const [photo, photoList] = await Promise.all([photoById, photos]);
-
-  console.log(photoList);
 
   return (
     <div

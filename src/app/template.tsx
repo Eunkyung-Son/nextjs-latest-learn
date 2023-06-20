@@ -5,10 +5,6 @@ import ListItem from "../../components/ListItem/ListItem";
 import MemoizedListItem, {
   Photo,
 } from "../../components/MemoizedListItem/MemoizedListItem";
-// import PhotosComponent2 from "../../components/Photos2/Photos2";
-// const PhotosComponent2 = React.lazy(
-//   () => import("../../components/Photos2/Photos2")
-// );
 
 const PhotosComponent2 = React.lazy(() => {
   return new Promise((resolve) => setTimeout(resolve, 2000)).then(

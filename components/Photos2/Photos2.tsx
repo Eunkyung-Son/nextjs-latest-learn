@@ -1,6 +1,6 @@
 "use client";
+import { useEffect, useState } from "react";
 import { Photo } from "../MemoizedListItem/MemoizedListItem";
-import React, { Suspense } from "react";
 
 // 컴포넌트 안에서 데이터 페칭 시
 
@@ -11,9 +11,9 @@ import React, { Suspense } from "react";
 // ts error 유발하지 않음
 
 function PhotosComponent2() {
-  const [photos, setPhotos] = React.useState<Photo[]>([]);
+  const [photos, setPhotos] = useState<Photo[]>([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/comments")
       .then((response) => response.json())
       .then(setPhotos);
