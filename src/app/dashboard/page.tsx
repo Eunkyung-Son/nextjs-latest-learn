@@ -13,7 +13,10 @@ export const metadata: Metadata = {
 
 async function getPhotoById(id: number) {
   const res = await fetch(
-    `https://jsonplaceholder.typicode.com/comments/${id}`
+    `https://jsonplaceholder.typicode.com/comments/${id}`,
+    {
+      cache: "no-store",
+    }
   );
   const data = await res.json();
   return data as PhotoType;
@@ -27,6 +30,8 @@ export default async function Page() {
       style={{
         backgroundColor: "min",
         border: "1px solid black",
+        width: "1000px",
+        height: "100%",
       }}
     >
       <h1>Hello Dashboard Page!!</h1>
@@ -36,7 +41,7 @@ export default async function Page() {
           border: "1px solid black",
         }}
       >
-        <h1>no suspense boundary</h1>
+        <h1>non-suspense boundary</h1>
 
         <MemoizedListItem key={photo.id} data={photo} />
       </div>
@@ -48,7 +53,6 @@ export default async function Page() {
       >
         <Suspense fallback={"loading....!!!!"}>
           <PhotosComponent3 />
-          {/* <HydratedPosts /> */}
         </Suspense>
         <Suspense fallback={"loading....!!!!"}>
           <HydratedPosts />

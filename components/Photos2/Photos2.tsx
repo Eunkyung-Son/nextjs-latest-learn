@@ -14,7 +14,9 @@ function PhotosComponent2() {
   const [photos, setPhotos] = useState<Photo[]>([]);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/comments")
+    fetch("https://jsonplaceholder.typicode.com/comments", {
+      cache: "no-store",
+    })
       .then((response) => response.json())
       .then(setPhotos);
   }, [setPhotos]);

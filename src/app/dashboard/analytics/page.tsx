@@ -6,7 +6,5 @@ export default async function Page() {
 
   const data = await res.json();
 
-  console.log(data);
-
   return <h1>{JSON.stringify(data.tickers)}</h1>;
 }

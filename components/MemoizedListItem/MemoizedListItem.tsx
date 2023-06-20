@@ -18,6 +18,8 @@ const MemoizedListItem = ({ data }: ListItemProps) => {
     <div
       style={{
         border: "1px solid green",
+        width: "500px",
+        height: "100%",
       }}
     >
       <p

@@ -1,16 +1,21 @@
 "use client";
 
-import React, { Profiler, Suspense } from "react";
+import React, { Profiler, Suspense, lazy } from "react";
 import ListItem from "../../components/ListItem/ListItem";
 import MemoizedListItem, {
   Photo,
 } from "../../components/MemoizedListItem/MemoizedListItem";
+import dynamic from "next/dynamic";
 
-const PhotosComponent2 = React.lazy(() => {
-  return new Promise((resolve) => setTimeout(resolve, 2000)).then(
-    () => import("../../components/Photos2/Photos2")
-  );
-});
+// const PhotosComponent2 = lazy(() => {
+//   return new Promise((resolve) => setTimeout(resolve, 2000)).then(
+//     () => import("../../components/Photos2/Photos2")
+//   );
+// });
+const PhotosComponent1 = dynamic(
+  () => import("../../components/Photos2/Photos2"),
+  { ssr: false }
+);
 
 // client 코드는 template 에서만 작성 가능
 export default function Template({ children }: { children: React.ReactNode }) {
@@ -18,7 +23,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const [photos, setPhotos] = React.useState<Photo[]>([]);
 
   React.useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/comments")
+    fetch("https://jsonplaceholder.typicode.com/comments", {
+      cache: "no-cache",
+    })
       .then((response) => response.json())
       .then(setPhotos);
   }, [setPhotos]);
@@ -59,17 +66,17 @@ export default function Template({ children }: { children: React.ReactNode }) {
     <div
       style={{
         backgroundColor: "lightblue",
-        border: "1px solid black",
+        border: "2px solid black",
       }}
     >
-      <h1>message: {message}</h1>
       <p>Root Template</p>
+      <h1>csr template component</h1>
+      <h1>message: {message}</h1>
       <p>page inside a template</p>
       <p>
         상위에 template 이 있고 상위 route 에 template이 없으면 상위
         template으로 override 됨
       </p>
-      <h1>csr template component</h1>
       <div
         style={{
           display: "flex",
@@ -120,22 +127,52 @@ export default function Template({ children }: { children: React.ReactNode }) {
             {/**
              * suspense의 경우, 내부 컴포넌트가 비동기적으로 동작해야지만 보여진다
              */}
-            <h1>improve cumulative layout shift</h1>
-            <Suspense
-              fallback={
-                <div
-                  style={{
-                    width: "550px",
-                    height: "100%",
-                  }}
-                >
-                  ...loading!!!!!!!!!!!!
-                </div>
-              }
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
             >
-              <PhotosComponent2 />
-            </Suspense>
-
+              <h1>improve cumulative layout shift</h1>
+              <Suspense
+                fallback={
+                  <div
+                    style={{
+                      width: "550px",
+                      height: "100%",
+                    }}
+                  >
+                    ...loading!!!!!!!!!!!!
+                  </div>
+                }
+              >
+                <PhotosComponent1 />
+              </Suspense>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                height: "100%",
+                width: "500px",
+              }}
+            >
+              <h1>dynamic import</h1>
+              <Suspense
+                fallback={
+                  <div
+                    style={{
+                      width: "550px",
+                      height: "100%",
+                    }}
+                  >
+                    ...loading!!!!!!!!!!!!
+                  </div>
+                }
+              >
+                <PhotosComponent1 />
+              </Suspense>
+            </div>
             <div>
               <p>memoized</p>
               <Suspense

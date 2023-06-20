@@ -9,7 +9,9 @@ import { Photo } from "../MemoizedListItem/MemoizedListItem";
 // {/* @ts-expect-error Async Server Component */}
 // ts error 유발하지 않음
 async function getPhotos() {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/comments`);
+  const res = await fetch(`https://jsonplaceholder.typicode.com/comments`, {
+    cache: "no-store",
+  });
   const data = await res.json();
   return data as Photo[];
 }
