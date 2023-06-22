@@ -7,14 +7,10 @@ import MemoizedListItem, {
 } from "../../components/MemoizedListItem/MemoizedListItem";
 import dynamic from "next/dynamic";
 
-// const PhotosComponent2 = lazy(() => {
-//   return new Promise((resolve) => setTimeout(resolve, 2000)).then(
-//     () => import("../../components/Photos2/Photos2")
-//   );
-// });
+const PhotosComponent2 = lazy(() => import("../../components/Photos2/Photos2"));
 const PhotosComponent1 = dynamic(
   () => import("../../components/Photos2/Photos2"),
-  { ssr: false }
+  { ssr: false, loading: () => <div>로딩이여~~~~~~~!!!!</div> }
 );
 
 // client 코드는 template 에서만 작성 가능
@@ -146,7 +142,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
                   </div>
                 }
               >
-                <PhotosComponent1 />
+                <PhotosComponent2 />
               </Suspense>
             </div>
             <div
@@ -158,20 +154,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
               }}
             >
               <h1>dynamic import</h1>
-              <Suspense
-                fallback={
-                  <div
-                    style={{
-                      width: "550px",
-                      height: "100%",
-                    }}
-                  >
-                    ...loading!!!!!!!!!!!!
-                  </div>
-                }
-              >
-                <PhotosComponent1 />
-              </Suspense>
+
+              <PhotosComponent1 />
             </div>
             <div>
               <p>memoized</p>

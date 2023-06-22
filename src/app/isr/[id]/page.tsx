@@ -11,9 +11,13 @@ export default async function Page({ params }: { params: { id: string } }) {
     `https://api.coingecko.com/api/v3/coins/${params.id}`,
     { next: { revalidate: 10 } }
   );
-  const data = (await res.json()) as { title: string; body: string };
-
-  console.log(data);
+  const data = (await res.json()) as {
+    market_data: {
+      current_price: {
+        [x: string]: number;
+      };
+    };
+  };
 
   return (
     <div className="grid grid-cols-6 gap-x-6 gap-y-3">
@@ -25,7 +29,9 @@ export default async function Page({ params }: { params: { id: string } }) {
           {/* 타이틀{JSON.stringify(data)} */}
           {params.id}
         </h1>
-        <p className="font-medium text-gray-500">{JSON.stringify(data)}</p>
+        <p className="font-medium text-gray-500">
+          {JSON.stringify(data.market_data)}
+        </p>
       </div>
     </div>
   );

@@ -25,14 +25,19 @@ export const metadata: Metadata = {
  */
 async function getPhotoById(id: number) {
   const res = await fetch(
-    `https://jsonplaceholder.typicode.com/comments/${id}`
+    `https://jsonplaceholder.typicode.com/comments/${id}`,
+    {
+      cache: "no-cache",
+    }
   );
   const data = await res.json();
   return data as Photo;
 }
 
 export async function getPhotos() {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/comments`);
+  const res = await fetch(`https://jsonplaceholder.typicode.com/comments`, {
+    cache: "no-cache",
+  });
   const data = await res.json();
   return data as Photo[];
 }
@@ -50,6 +55,7 @@ export default async function Page() {
       style={{
         backgroundColor: "lightgray",
         border: "1px solid black",
+        width: "500px",
       }}
     >
       <h1>ssr page component</h1>
