@@ -60,7 +60,7 @@ export default async function Page() {
       }}
     >
       <h1>ssr page component</h1>
-      <Link href="/dashboard" />
+      <Link href="/dashboard">go to dashboard</Link>
 
       <MemoizedListItem key={photo.id} data={photo} />
       {photoList.map((photo) => (
