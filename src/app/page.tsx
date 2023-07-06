@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import MemoizedListItem, {
   type Photo,
 } from "../../components/MemoizedListItem/MemoizedListItem";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "EUNKYUNG",
@@ -59,6 +60,7 @@ export default async function Page() {
       }}
     >
       <h1>ssr page component</h1>
+      <Link href="/dashboard" />
 
       <MemoizedListItem key={photo.id} data={photo} />
       {photoList.map((photo) => (
